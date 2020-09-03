@@ -15,11 +15,13 @@
             android:id="@+id/EditText_save_title"
             android:layout_width="250dp"
             android:layout_height="50dp"
-            android:hint="제목을 입력해주세요"></EditText>
+            android:hint="제목을 입력해주세요">
+        </EditText>
         <Button
             android:id="@+id/Button_save_title"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:background="@drawable/btn_design_check"
             ></Button>
     </LinearLayout>
     <LinearLayout
@@ -39,6 +41,7 @@
             android:id="@+id/Button_save_keyword"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:background="@drawable/btn_design_check"
             ></Button>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

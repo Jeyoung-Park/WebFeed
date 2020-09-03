@@ -1,32 +1,34 @@
-package com.webalert;
 
-import android.app.IntentService;
-import android.app.Notification;
-import android.app.PendingIntent;
-import android.app.Service;
-import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Handler;
-import android.os.IBinder;
-import android.os.Looper;
-import android.os.PowerManager;
-import android.util.Log;
-import android.view.View;
-import android.webkit.JavascriptInterface;
-import android.webkit.WebChromeClient;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
+        package com.webalert;
 
-import androidx.annotation.Nullable;
-import androidx.core.app.NotificationCompat;
+        import android.app.IntentService;
+        import android.app.Notification;
+        import android.app.PendingIntent;
+        import android.app.Service;
+        import android.content.Intent;
+        import android.database.Cursor;
+        import android.database.sqlite.SQLiteDatabase;
+        import android.os.Handler;
+        import android.os.IBinder;
+        import android.os.Looper;
+        import android.os.PowerManager;
+        import android.util.Log;
+        import android.view.View;
+        import android.webkit.JavascriptInterface;
+        import android.webkit.WebChromeClient;
+        import android.webkit.WebView;
+        import android.webkit.WebViewClient;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+        import androidx.annotation.Nullable;
+        import androidx.core.app.NotificationCompat;
+        import androidx.core.app.NotificationManagerCompat;
 
-import static com.webalert.App.CHANNEL_ID;
+        import java.util.ArrayList;
+        import java.util.Iterator;
+        import java.util.regex.Matcher;
+        import java.util.regex.Pattern;
+
+        import static com.webalert.App.CHANNEL_ID;
 /*
 public class NotificationService extends Service {
 
@@ -74,14 +76,16 @@ public class NotificationService extends Service {
     private DBHelper mDBHelper;
     private WebView currentWebView;
     private String currentKeyword, currentUrl;
-//    private int currentKeywordNumber;
+    //    private int currentKeywordNumber;
     private Handler mHandler;
-    private int temp;
+    private int webNumber, count;
     private RecordItem r;
     private SQLiteDatabase db;
     private keywordCheckThread runnable;
     private Thread thread;
     private static int currentKeywordNumber=0;
+    private ArrayList<String> list, temp_list;
+    private ArrayList<String>[] arr_list, arr_temp_list;
 
     @Override
     public void onCreate() {
@@ -92,6 +96,10 @@ public class NotificationService extends Service {
         Log.d("태그2", "서비스 호출");
 
         mDBHelper = new DBHelper(this);
+        list=new ArrayList<>();
+        temp_list=new ArrayList<>();
+        arr_list= new ArrayList[mDBHelper.getDBCount()];
+        arr_temp_list=new ArrayList[mDBHelper.getDBCount()];
 //        currentWebView=new WebView(this);
 //        mHandler=new Handler();
 //        mHandler=new Handler();
@@ -99,7 +107,7 @@ public class NotificationService extends Service {
 //        thread=new Thread(runnable);
     }
 
-//    서비스가 시작될 때 호출
+    //    서비스가 시작될 때 호출
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 //        return super.onStartCommand(intent, flags, startId);
@@ -140,8 +148,8 @@ public class NotificationService extends Service {
 
         Notification notification=new NotificationCompat.Builder(NotificationService.this, CHANNEL_ID)
                 .setContentTitle("Web Alert")
-                .setContentText(currentUrl)
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setContentText("Web Alert 서비스 실행중")
+                .setSmallIcon(R.drawable.web_alert_icon_1)
                 .setContentIntent(pendingIntent)
                 .addAction(R.drawable.ic_launcher_foreground, "중지", actionIntent)
                 .build();
@@ -155,7 +163,7 @@ public class NotificationService extends Service {
         super.onDestroy();
     }
 
-//    바운드 서비스를 사용하는 데 이용
+    //    바운드 서비스를 사용하는 데 이용
 //    앞뒤로 통신
     @Nullable
     @Override
@@ -189,44 +197,60 @@ public class NotificationService extends Service {
                 try{
                     mHandler=new Handler(Looper.getMainLooper());
                     mHandler.post(new Runnable() {
-                                      @Override
-                                      public void run() {
-                                          Log.d("keyword개수", "run 호출");
-                                          Iterator<RecordItem> iterator = recordItemList.iterator();
-                                          while (iterator.hasNext()) {
-                                              Log.d("keyword개수", "while 내부 호출");
-                                              r = iterator.next();
-                                              currentWebView=new WebView(NotificationService.this);
+                        @Override
+                        public void run() {
+                            Log.d("keyword개수", "run 호출");
+                            Iterator<RecordItem> iterator = recordItemList.iterator();
+                            webNumber=0;
+                            while (iterator.hasNext()) {
+                                webNumber++;
+                                Log.d("keyword개수", "while 내부 호출");
+                                r = iterator.next();
+                                currentWebView=new WebView(NotificationService.this);
 //                                              Log.d("태그3", "RecordItem: " + r.getTitle());
 //                                              currentKeywordNumber = r.getKeywordNumber();
-                                              currentKeyword = r.getKeyword();
-                                              currentUrl = r.getAddress();
+                                currentKeyword = r.getKeyword();
+                                currentUrl = r.getAddress();
 //                                              Log.d("태그3", "loadUrl:" + currentUrl);
-                                              currentWebView.setWebViewClient(new WebViewClient(){
-                                                  @Override
-                                                  public void onPageFinished(WebView view, String url) {
-                                                      Log.d("keyword개수", "onPageFinished 호출");
-                                                      super.onPageFinished(view, url);
-                                                      view.loadUrl("javascript:window.Android.getHtml(document.getElementsByTagName('html')[0].innerHTML);"); //<html></html> 사이에 있는 모든 html을 넘겨준다.
-                                                  }
-                                              });
-                                              currentWebView.getSettings().setJavaScriptEnabled(true);
-                                              currentWebView.addJavascriptInterface(new MyJavascriptInterface(), "Android");
-                                              currentWebView.setWebChromeClient(new WebChromeClient());
-                                              currentWebView.loadUrl(currentUrl);
-                                              Log.d("keyword개수", r.getTitle()+":"+currentKeywordNumber);
-                                              if(currentKeywordNumber>r.getKeywordNumber()){
-                                                  //상태변화
-                                              }
-                                              r.setKeywordNumber(currentKeywordNumber);
+                                currentWebView.setWebViewClient(new WebViewClient(){
+                                    @Override
+                                    public void onPageFinished(WebView view, String url) {
+                                        Log.d("keyword개수", "onPageFinished 호출");
+                                        super.onPageFinished(view, url);
+                                        view.loadUrl("javascript:window.Android.getHtml(document.getElementsByTagName('html')[0].innerHTML);"); //<html></html> 사이에 있는 모든 html을 넘겨준다.
+                                    }
+                                });
+                                currentWebView.getSettings().setJavaScriptEnabled(true);
+                                currentWebView.addJavascriptInterface(new MyJavascriptInterface(), "Android");
+                                currentWebView.setWebChromeClient(new WebChromeClient());
+                                currentWebView.loadUrl(currentUrl);
+                                Log.d("keyword개수", r.getTitle()+":"+currentKeywordNumber);
+                                if(currentKeywordNumber>r.getKeywordNumber()){
+                                    //상태변화
+                                    notifyChange(r.getTitle());
+                                    mDBHelper.updatetoChange(r.getId());
+                                }else if(currentKeywordNumber==r.getKeywordNumber()){
+                                    for(int i=0;i<list.size();i++){
+                                        if(!list.get(i).equals(temp_list.get(i))){
+                                            //상태변화
+                                            notifyChange(r.getTitle());
+                                            mDBHelper.updatetoChange(r.getId());
+                                        }
+                                    }
+                                }
+                                list.clear();
+                                for(String s:temp_list){
+                                    list.add(s);
+                                }
+                                r.setKeywordNumber(currentKeywordNumber);
 //                                              currentWebView.findAllAsync(currentKeyword);
 //                                              currentWebView.reload();
 //                                              currentWebView.findAll(currentKeyword);
-                                              try {
-                                                  Thread.sleep(1000);
-                                              } catch (InterruptedException e) {
-                                                  e.printStackTrace();
-                                              }
+//                                try {
+//                                    Thread.sleep(60*1000);
+//                                } catch (InterruptedException e) {
+//                                    e.printStackTrace();
+//                                }
                                            /*   currentWebView.setFindListener(new WebView.FindListener() {
                                                   @Override
                                                   public void onFindResultReceived(int i, int i1, boolean b) {
@@ -274,15 +298,15 @@ public class NotificationService extends Service {
                                                       }
                                                   }
                                               });*/
-                                              try {
-                                                  Thread.sleep(1000);
-                                              } catch (InterruptedException e) {
-                                                  e.printStackTrace();
-                                              }
-                                          }
-                                      }
-                                  });
-                    Thread.sleep(10000);
+//                                try {
+//                                    Thread.sleep(60*1000);
+//                                } catch (InterruptedException e) {
+//                                    e.printStackTrace();
+//                                }
+                            }
+                        }
+                    });
+                    Thread.sleep(60*60*1000);
 
 //                    if(++i>10) break;
 //                    for(RecordItem r:recordItemList){
@@ -323,14 +347,22 @@ public class NotificationService extends Service {
 //            Log.d("keyword개수", html);
             Log.d("keyword개수", "MyJavascriptInterface 호출");
             int cnt=0;
-            String str=html;
-            Pattern pattern= Pattern.compile("java");
+//            String str=html;
+            arr_temp_list[].clear();
+            Pattern pattern= Pattern.compile(currentKeyword);
             Matcher matcher=pattern.matcher(html);
             while(matcher.find()){
                 cnt++;
+                int temp=matcher.end();
+//                Log.d("keyword2", "keyword 다음 문자 위치: "+temp);
+                temp_list.add(html.substring(temp, temp+10));
             }
             currentKeywordNumber=cnt;
             Log.d("keyword개수", "키워드 개수:"+currentKeywordNumber);
+            Log.d("keyword2", "list.size="+temp_list.size());
+//            for(int i=0;i<temp_list.size();i++){
+//                Log.d("keyword개수", currentKeyword+"키워드 다음 문자 "+(i+1)+" : "+temp_list.get(i));
+//            }
 
 //            int cnt=0;
 //            String s[]=html.split(" ");
@@ -352,16 +384,38 @@ public class NotificationService extends Service {
         recordItemList.add(item);
     }
 
-//    없앨 수 있는 notification으로 바꾸기
-    public void notifyChange(String title, PendingIntent pendingIntent){
-        Log.d("태그4", "notifyChange 호출");
-        Notification notification=new NotificationCompat.Builder(NotificationService.this, CHANNEL_ID)
+    //    없앨 수 있는 notification으로 바꾸기
+    private void notifyChange(String title) {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+////            CharSequence name = getString(R.string.channel_name);
+//            String description = title+"에서 키워드가 감지되었습니다.";
+//            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+//            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "keyword_change", importance);
+//            channel.setDescription(description);
+//            // Register the channel with the system; you can't change the importance
+//            // or other notification behaviors after this
+//            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+//            notificationManager.createNotificationChannel(channel);
+//        }
+        // Create an explicit intent for an Activity in your app
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent2 = PendingIntent.getActivity(this, 0, intent, 0);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.web_alert_icon_1)
                 .setContentTitle("Web Alert")
-                .setContentText(title+"에서 키워드가 감지되었습니다")
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
-                .setContentIntent(pendingIntent)
-                .setAutoCancel(true)
-                .build();
-        startForeground(1, notification);
+                .setContentText(title+"에서 키워드가 감지되었습니다.")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                // Set the intent that will fire when the user taps the notification
+                .setContentIntent(pendingIntent2)
+                .setAutoCancel(true);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+
+// notificationId is a unique int for each notification that you must define
+        notificationManager.notify(0, builder.build());
     }
 }

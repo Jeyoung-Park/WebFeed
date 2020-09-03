@@ -68,7 +68,7 @@ public class SetInfoActivity extends AppCompatActivity {
         ActionBar ab = getSupportActionBar() ;
         ab.setTitle("Web Alert Set") ;
         ab.setDisplayHomeAsUpEnabled(true);
-        ab.setHomeAsUpIndicator(R.drawable.ic_launcher_foreground);
+//        ab.setHomeAsUpIndicator(R.drawable.left_arrow_white);
 
         ImageButton_set_search.setOnClickListener(new View.OnClickListener() {
             @Override

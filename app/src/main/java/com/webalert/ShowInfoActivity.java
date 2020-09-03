@@ -46,6 +46,7 @@ public class ShowInfoActivity extends AppCompatActivity {
     SQLiteDatabase db;
     private long currentTimeInMillis;
     private int temp;
+    private NotificationService notificationService;
 
 //    @SuppressLint("JavascriptInterface")
     @Override
@@ -53,6 +54,7 @@ public class ShowInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_info);
 
+        notificationService=new NotificationService();
         WebView_show_webview=findViewById(R.id.WebView_show_webview);
         mDBHelper = new DBHelper(this);
         db = mDBHelper.getReadableDatabase();
@@ -197,10 +199,12 @@ public class ShowInfoActivity extends AppCompatActivity {
                             currentTitle=EditText_save_title.getText().toString();
                             currentKeyword=EditText_save_keyword.getText().toString();
                             SQLiteDatabase db2=mDBHelper.getWritableDatabase();
-                            mDBHelper.modify_keyword_title(db, currentId, currentTitle, currentKeyword);
+                            mDBHelper.modify_keyword_title(db2, currentId, currentTitle, currentKeyword);
                             Intent intent = new Intent(ShowInfoActivity.this, MainActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
+                            notificationService.stopThread();
+                            notificationService.startThread();
                         }
                     })
                     .setNegativeButton("취소", new DialogInterface.OnClickListener() {
@@ -213,7 +217,29 @@ public class ShowInfoActivity extends AppCompatActivity {
             alertDialog.show();
             return true;
         }
-        else if(item.getItemId()==R.id.action_show_info_stop){
+        else if(item.getItemId()==R.id.action_show_info_delete){
+            AlertDialog.Builder builder=new AlertDialog.Builder(this);
+            builder.setMessage("삭제하시겠습니까?")
+                    .setPositiveButton("삭제", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            SQLiteDatabase db2=mDBHelper.getWritableDatabase();
+                            mDBHelper.dbDelete(db2, currentId);
+                            Toast.makeText(ShowInfoActivity.this, "삭제되었습니다.", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(ShowInfoActivity.this, MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                        }
+                    })
+                    .setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    });
+            AlertDialog alertDialog=builder.create();
+            alertDialog.show();
+   /*
             //            시작->중지
             if(mDBHelper.getIsStart(currentId)==1){
                 Log.d("태그1", "시작->중지");
@@ -231,6 +257,7 @@ public class ShowInfoActivity extends AppCompatActivity {
             }
             Log.d("currentId", String.valueOf(currentId));
 //            mDBHelper.modify_isStart2(currentId);
+*/
             return true;
         }
         else    return super.onOptionsItemSelected(item) ;

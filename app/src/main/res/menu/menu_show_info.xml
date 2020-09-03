@@ -5,14 +5,14 @@
         android:id="@+id/action_show_info_modify"
         android:title="수정"
         app:showAsAction="always"
-        android:icon="@drawable/ic_launcher_foreground"
+        android:icon="@drawable/edit_white"
         android:orderInCategory="1"
         ></item>
     <item
-        android:id="@+id/action_show_info_stop"
-        android:title="중지"
+        android:id="@+id/action_show_info_delete"
+        android:title="삭제"
         app:showAsAction="always"
-        android:icon="@drawable/ic_launcher_foreground"
+        android:icon="@drawable/delete_white"
         android:orderInCategory="2"
         ></item>
 </menu>

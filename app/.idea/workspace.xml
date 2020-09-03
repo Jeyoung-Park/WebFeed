@@ -37,25 +37,33 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
   <component name="ProjectId" id="1fFPPxkR3y8ncmc4Ali5Nac28MB" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
     <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="Pixel_XL_API_30" />
-    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2020-08-19T09:04:02.801Z" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2020-09-02T09:03:36.818Z" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/res/drawable-v24" />
     <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\user\MyGitHub\WebAlert\app\src\main\res\drawable-v24" />
+      <recent name="C:\Users\user\MyGitHub\WebAlert\app\src\main\res\menu" />
+    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.webalert" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\user\MyGitHub\WebAlert\app\src\main\res\menu" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\user\MyGitHub\WebAlert\app\src\main\res\drawable-v24" />
     </key>
   </component>
   <component name="RunManager">
@@ -136,38 +144,42 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="1156" y="164" key="#app/0.0.1920.1040@0.0.1920.1040" timestamp="1597828865081" />
-    <state x="1245" y="204" key="#com.intellij.ide.util.MemberChooser" timestamp="1598855927852">
+    <state x="1245" y="204" key="#com.intellij.ide.util.MemberChooser" timestamp="1598934708723">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="1245" y="204" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1598855927852" />
-    <state x="690" y="266" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1596088718379">
+    <state x="1245" y="204" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1598934708723" />
+    <state x="690" y="266" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1598969973050">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="690" y="266" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1596088718379" />
-    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1597642326435">
+    <state x="690" y="266" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1598969973050" />
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1599043555879">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1597642326435" />
-    <state width="1860" height="157" key="GridCell.Tab.0.bottom" timestamp="1597899703098">
+    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1599043555879" />
+    <state width="1877" height="153" key="GridCell.Tab.0.bottom" timestamp="1598948446175">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1860" height="157" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1597899703098" />
-    <state width="1860" height="157" key="GridCell.Tab.0.center" timestamp="1597899703098">
+    <state width="1877" height="153" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1598948446175" />
+    <state width="1877" height="153" key="GridCell.Tab.0.center" timestamp="1598948446175">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1860" height="157" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1597899703098" />
-    <state width="1860" height="157" key="GridCell.Tab.0.left" timestamp="1597899703097">
+    <state width="1877" height="153" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1598948446175" />
+    <state width="1877" height="153" key="GridCell.Tab.0.left" timestamp="1598948446175">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1860" height="157" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1597899703097" />
-    <state width="1860" height="157" key="GridCell.Tab.0.right" timestamp="1597899703098">
+    <state width="1877" height="153" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1598948446175" />
+    <state width="1877" height="153" key="GridCell.Tab.0.right" timestamp="1598948446175">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1860" height="157" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1597899703098" />
-    <state x="652" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1598923256491">
+    <state width="1877" height="153" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1598948446175" />
+    <state x="652" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1599037339076">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="652" y="344" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1598923256491" />
+    <state x="652" y="344" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1599037339076" />
+    <state x="616" y="240" key="run.anything.popup" timestamp="1598927883949">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1598927883949" />
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1596635784505">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

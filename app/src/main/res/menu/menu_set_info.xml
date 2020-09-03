@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_set_save"
-        android:icon="@drawable/ic_launcher_foreground"
+        android:icon="@drawable/save_white"
         app:showAsAction="always"
         android:orderInCategory="1"
         android:title="저장"></item>
     <item
         android:id="@+id/action_set_help"
-        android:icon="@drawable/ic_launcher_foreground"
+        android:icon="@drawable/questionmark_white"
         app:showAsAction="always"
         android:orderInCategory="3"
         android:title="도움말"></item>

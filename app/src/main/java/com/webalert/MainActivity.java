@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
     private MenuItem action_main_stop_all;
     private NotificationService notificationService;
+    private long backKeyPressedTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -200,5 +201,19 @@ public class MainActivity extends AppCompatActivity {
         item.setKeyword(keyword);
         item.setChangeDetection(isChange);
         recordItems.add(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Toast toast=Toast.makeText(MainActivity.this, "한 번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT);
+        if(System.currentTimeMillis() > backKeyPressedTime + 2000){
+            backKeyPressedTime = System.currentTimeMillis();
+            toast.show();
+            return;
+        }
+        if(System.currentTimeMillis() <= backKeyPressedTime + 2000){
+            finish();
+            toast.cancel();
+        }
     }
 }

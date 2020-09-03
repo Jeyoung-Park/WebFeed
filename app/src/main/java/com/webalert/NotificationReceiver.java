@@ -29,7 +29,6 @@ public class NotificationReceiver extends BroadcastReceiver {
         editor.commit();
         Intent serviceIntent=new Intent(context, NotificationService.class);
         context.stopService(serviceIntent);
-        NotificationManagerCompat.from(context).cancel(1);
-
+        NotificationManagerCompat.from(context).cancel(2);
     }
 }
