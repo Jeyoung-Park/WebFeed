@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("isServiceStart", MODE_PRIVATE);
 
         ActionBar ab = getSupportActionBar() ;
-        ab.setTitle("Web Alert") ;
+        ab.setTitle(getString(R.string.app_name)) ;
 
         Cursor cursor = mDBHelper.loadSQLiteDBCursor();
         try {
@@ -147,9 +147,12 @@ public class MainActivity extends AppCompatActivity {
                                     editor.putBoolean("isServiceStart", false);
                                     Intent intent=new Intent(MainActivity.this, MainActivity.class);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    intent.putExtra("isServiceStart", false);
                                     startActivity(intent);
                                     overridePendingTransition(0, 0);
                                     notificationService.stopThread();
+//                                    Log.d("StopThread", "stopThread:"+notificationService.stopThread);
+                                    editor.commit();
                                 }
                             }
                         })
@@ -167,8 +170,9 @@ public class MainActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor=sharedPreferences.edit();
                 if(mAdapter.getItemCount()>0) {
                     if(sharedPreferences.getBoolean("isServiceStart", true)){
-                        Log.d("태그1", "시작->중지");
+                        Log.d("currentIsStartService", "시작->중지 호출");
                         Intent serviceIntent=new Intent(this, NotificationService.class);
+                        serviceIntent.putExtra("isServiceStart", false);
                         stopService(serviceIntent);
                         editor.putBoolean("isServiceStart", false);
                         item.setTitle("전체 시작");
@@ -176,9 +180,11 @@ public class MainActivity extends AppCompatActivity {
                     }
 //            중지->시작
                     else{
-                        Log.d("태그1", "중지->시작");
+                        Log.d("currentIsStartService", "중지->시작 호출");
+
                         Intent serviceIntent=new Intent(this, NotificationService.class);
                         serviceIntent.putExtra("URL", mDBHelper.getUrl());
+                        serviceIntent.putExtra("isServiceStart", true);
                         ContextCompat.startForegroundService(this, serviceIntent);
                         editor.putBoolean("isServiceStart", true);
                         item.setTitle("전체 중지");

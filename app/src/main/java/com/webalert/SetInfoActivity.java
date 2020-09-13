@@ -41,6 +41,7 @@ public class SetInfoActivity extends AppCompatActivity {
     private DBHelper mDBHelper;
     private String webUrl="";
     private SharedPreferences sharedPreferences;
+    private NotificationService notificationService;
 
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
@@ -52,6 +53,7 @@ public class SetInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_info);
 
+        notificationService=new NotificationService();
         EditText_set_search=findViewById(R.id.EditText_set_search);
         WebView_set_webview=findViewById(R.id.WebView_set_webview);
         ImageButton_set_search=findViewById(R.id.ImageButton_set_search);
@@ -66,7 +68,7 @@ public class SetInfoActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("isServiceStart", MODE_PRIVATE);
 
         ActionBar ab = getSupportActionBar() ;
-        ab.setTitle("Web Alert Set") ;
+        ab.setTitle("웹 페이지 정보 설정") ;
         ab.setDisplayHomeAsUpEnabled(true);
 //        ab.setHomeAsUpIndicator(R.drawable.left_arrow_white);
 
@@ -172,19 +174,17 @@ public class SetInfoActivity extends AppCompatActivity {
                                     e.printStackTrace();
                                 }
                                 Toast.makeText(SetInfoActivity.this, "성공적으로 저장되었습니다.", Toast.LENGTH_SHORT).show();
-                                if(sharedPreferences.getBoolean("isServiceStart", false)){
+                                if(sharedPreferences.getBoolean("isServiceStart", true)){
                                     Intent serviceIntent=new Intent(SetInfoActivity.this, NotificationService.class);
                                     stopService(serviceIntent);
                                 }
-                                Log.d("태그", "여기 실행되나1");
+//                                notificationService.stopThread();
                                 Intent serviceIntent=new Intent(SetInfoActivity.this, NotificationService.class);
                                 serviceIntent.putExtra("URL", mDBHelper.getUrl());
                                 ContextCompat.startForegroundService(SetInfoActivity.this, serviceIntent);
-                                Log.d("태그", "여기 실행되나2");
                                 Intent intent = new Intent(SetInfoActivity.this, MainActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
-                                Log.d("태그", "여기 실행되나3");
                             }
                         })
                         .setNegativeButton("취소", new DialogInterface.OnClickListener() {
@@ -198,7 +198,11 @@ public class SetInfoActivity extends AppCompatActivity {
                 return true;
             case R.id.action_set_help:
 //          도움말 띄우기
-                return true;
+          AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
+//          builder2.setTitle("도움말")
+
+
+          return true;
             default :
                 return super.onOptionsItemSelected(item) ;
         }

@@ -1,9 +1,21 @@
 package com.webalert;
 
+import java.util.ArrayList;
+
 public class RecordItem {
     private Long id;
     private String title, address, keyword;
     private int changeDetection, keywordNumber;
+
+    public ArrayList getList() {
+        return list;
+    }
+
+    public void setList(ArrayList list) {
+        this.list = list;
+    }
+
+    private ArrayList list;
 
     public RecordItem(){}
 

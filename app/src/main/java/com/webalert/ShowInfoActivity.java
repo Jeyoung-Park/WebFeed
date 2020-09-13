@@ -76,6 +76,9 @@ public class ShowInfoActivity extends AppCompatActivity {
             }
         }
 
+        ActionBar ab = getSupportActionBar() ;
+        ab.setTitle(currentTitle) ;
+
 //        WebView_show_webview.setWebViewClient(new WebViewClient(){
 //            @Override
 //            public void onPageFinished(WebView view, String url) {
@@ -200,11 +203,17 @@ public class ShowInfoActivity extends AppCompatActivity {
                             currentKeyword=EditText_save_keyword.getText().toString();
                             SQLiteDatabase db2=mDBHelper.getWritableDatabase();
                             mDBHelper.modify_keyword_title(db2, currentId, currentTitle, currentKeyword);
+
+                            Intent serviceIntent=new Intent(ShowInfoActivity.this, NotificationService.class);
+                            stopService(serviceIntent);
+                            startService(serviceIntent);
+
+                            notificationService.stopThread();
+                            notificationService.startThread();
+
                             Intent intent = new Intent(ShowInfoActivity.this, MainActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
-                            notificationService.stopThread();
-                            notificationService.startThread();
                         }
                     })
                     .setNegativeButton("취소", new DialogInterface.OnClickListener() {
