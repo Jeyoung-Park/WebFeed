@@ -1,8 +1,10 @@
 package com.webalert;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -71,12 +73,19 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     }
 
     // view에 아이템 값을 할당
+    @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         holder.TextView_title.setText(rvList.get(position).getTitle());
         holder.TextView_address.setText(rvList.get(position).getAddress());
-        if(rvList.get(position).getChangeDetection()==0)  holder.TextView_ChangeDetection.setText("변화 없음");
-        else if(rvList.get(position).getChangeDetection()==1)  holder.TextView_ChangeDetection.setText("키워드 감지");
+        if(rvList.get(position).getChangeDetection()==0)  {
+            holder.TextView_ChangeDetection.setText("변화 없음");
+            holder.TextView_ChangeDetection.setTextColor(Color.parseColor("#757575"));
+        }
+        else if(rvList.get(position).getChangeDetection()==1)  {
+            holder.TextView_ChangeDetection.setText("키워드 감지");
+            holder.TextView_ChangeDetection.setTextColor(R.color.colorAccent);
+        }
         holder.TextView_recyclerview_delete_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

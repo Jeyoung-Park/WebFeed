@@ -24,6 +24,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private MenuItem action_main_stop_all;
     private NotificationService notificationService;
     private long backKeyPressedTime;
+    private LinearLayout LinearLayout_nothing;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.RecyclerView_main);
         ImageButton_main_add=findViewById(R.id.ImageButton_main_add);
+        LinearLayout_nothing=findViewById(R.id.LinearLayout_nothing);
         notificationService=new NotificationService();
 
         recordItems.clear();
@@ -110,6 +113,9 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        if(mDBHelper.getDBCount()==0) LinearLayout_nothing.setVisibility(View.VISIBLE);
+        else LinearLayout_nothing.setVisibility(View.INVISIBLE);
     }
 
     @Override

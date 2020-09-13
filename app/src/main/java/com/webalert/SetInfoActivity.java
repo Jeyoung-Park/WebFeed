@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -19,6 +21,8 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -66,6 +70,17 @@ public class SetInfoActivity extends AppCompatActivity {
         db=mDBHelper.getWritableDatabase();
 
         sharedPreferences = getSharedPreferences("isServiceStart", MODE_PRIVATE);
+
+//        TextView tv = new TextView(getApplicationContext());
+//        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT);
+//        tv.setLayoutParams(lp);
+//        tv.setText("Welcome!");
+//        tv.setTextSize(20);
+//        tv.setTextColor(Color.parseColor("#FFFFFF"));
+//        Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/bccardb");
+//        tv.setTypeface(tf);
+//        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+//        getSupportActionBar().setCustomView(tv);
 
         ActionBar ab = getSupportActionBar() ;
         ab.setTitle("웹 페이지 정보 설정") ;
@@ -198,10 +213,8 @@ public class SetInfoActivity extends AppCompatActivity {
                 return true;
             case R.id.action_set_help:
 //          도움말 띄우기
-          AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
-//          builder2.setTitle("도움말")
-
-
+                Intent intent=new Intent(this, HelpActivity.class);
+                startActivity(intent);
           return true;
             default :
                 return super.onOptionsItemSelected(item) ;

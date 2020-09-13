@@ -35,6 +35,7 @@
             android:screenOrientation="portrait" />
         <service android:name=".NotificationService"></service>
         <receiver android:name=".NotificationReceiver" />
+        <activity android:name=".HelpActivity"></activity>
     </application>
 
 </manifest>

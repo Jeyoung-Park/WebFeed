@@ -305,7 +305,7 @@ public class NotificationService extends Service {
                             }
                         }
                     });
-                    Thread.sleep(10*1000);
+                    Thread.sleep(60*60*1000);
                 }catch(Exception e){
                     e.printStackTrace();
                 }
